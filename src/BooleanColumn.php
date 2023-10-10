@@ -2,19 +2,19 @@
 
 namespace Mediconesystems\LivewireDatatables;
 
+use Closure;
+
 class BooleanColumn extends Column
 {
-    public $type = 'boolean';
-    public $callback;
+    public string $type = 'boolean';
+    public string|Closure|array $callback;
 
     public function __construct()
     {
-        $this->callback = function ($value) {
-            return view('datatables::boolean', ['value' => $value]);
-        };
+        parent::__construct();
 
-        $this->exportCallback = function ($value) {
-            return $value ? 1 : 0;
-        };
+        $this->callback = static fn ($value)=> view('datatables::boolean', ['value' => $value]);
+
+        $this->exportCallback = static fn ($value) => $value ? 'Yes' : 'No';
     }
 }

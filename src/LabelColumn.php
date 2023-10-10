@@ -9,7 +9,7 @@ namespace Mediconesystems\LivewireDatatables;
  */
 class LabelColumn extends Column
 {
-    public $type = 'label';
+    public string $type = 'label';
 
     public $content = '';
 
