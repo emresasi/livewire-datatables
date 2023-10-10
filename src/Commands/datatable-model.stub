@@ -3,13 +3,14 @@
 namespace [namespace];
 
 use [use];
+use Illuminate\Database\Eloquent\Model;
 use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class [class] extends LivewireDatatable
 {
-    public $model = [model]::class;
+    public string|null|Model $model = [model]::class;
 
-    public function columns()
+    public function getColumns(): array|Model
     {
         //
     }

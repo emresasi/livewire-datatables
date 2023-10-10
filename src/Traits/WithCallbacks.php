@@ -7,12 +7,12 @@ use Illuminate\Support\Str;
 
 trait WithCallbacks
 {
-    public function edited($value, $key, $column, $rowId)
+    public function edited($value, $key, $column, $rowId): void
     {
         DB::table(Str::before($key, '.'))
             ->where(Str::after($key, '.'), $rowId)
             ->update([$column => $value]);
 
-        $this->emit('fieldEdited', $rowId, $column);
+        $this->dispatch('fieldEdited', rowId: $rowId, column: $column);
     }
 }

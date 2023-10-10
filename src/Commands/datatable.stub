@@ -6,12 +6,12 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class [class] extends LivewireDatatable
 {
-    public function builder()
+    public function builder(): Builder
     {
         //
     }
 
-    public function columns()
+    public function getColumns(): array|Model
     {
         //
     }

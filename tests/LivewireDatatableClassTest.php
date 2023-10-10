@@ -3,7 +3,7 @@
 namespace Mediconesystems\LivewireDatatables\Tests;
 
 use Livewire\Livewire;
-use Mediconesystems\LivewireDatatables\Tests\Classes\DummyTable;
+use Mediconesystems\LivewireDatatables\Tests\classes\DummyTable;
 use Mediconesystems\LivewireDatatables\Tests\Models\DummyModel;
 
 class LivewireDatatableClassTest extends TestCase
@@ -71,7 +71,7 @@ class LivewireDatatableClassTest extends TestCase
         $this->assertEquals('Advanced beet growing', $subject->results->getCollection()[1]->subject);
 
         $subject->forgetComputed();
-        $subject->sort = 1;
+        $subject->sortIndex = 1;
         $subject->direction = true;
 
         $this->assertEquals('Advanced beet growing', $subject->results->getCollection()[0]->subject);

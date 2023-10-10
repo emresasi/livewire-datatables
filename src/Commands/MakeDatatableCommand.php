@@ -3,8 +3,7 @@
 namespace Mediconesystems\LivewireDatatables\Commands;
 
 use Illuminate\Support\Facades\File;
-use Livewire\Commands\FileManipulationCommand;
-use Livewire\LivewireComponentsFinder;
+use Livewire\Features\SupportConsoleCommands\Commands\FileManipulationCommand;
 
 class MakeDatatableCommand extends FileManipulationCommand
 {
@@ -12,30 +11,30 @@ class MakeDatatableCommand extends FileManipulationCommand
 
     protected $description = 'Create a new Livewire Datatable';
 
-    public function handle()
+    public function handle(): void
     {
         $this->parser = new ComponentParser(
-            config('livewire.class_namespace', 'App\\Http\\Livewire'),
+            config('livewire.class_namespace', 'App\\Livewire') . '\\Datatables',
             $this->argument('name'),
             $this->option('model')
         );
 
         if ($this->isReservedClassName($name = $this->parser->className())) {
             $this->line("<options=bold,reverse;fg=red> WHOOPS! </> 😳 \n");
-            $this->line("<fg=red;options=bold>Class is reserved:</> {$name}");
+            $this->line("<fg=red;options=bold>Class is reserved:</> $name");
 
             return;
         }
 
         $class = $this->createClass();
 
-        $this->refreshComponentAutodiscovery();
+//        $this->refreshComponentAutodiscovery();
 
         $this->line("<options=bold,reverse;fg=green> COMPONENT CREATED </> 🤙\n");
         $class && $this->line("<options=bold;fg=green>CLASS:</> {$this->parser->relativeClassPath()}");
     }
 
-    protected function createClass()
+    protected function createClass(): bool
     {
         $classPath = $this->parser->classPath();
 
@@ -53,13 +52,13 @@ class MakeDatatableCommand extends FileManipulationCommand
         return $classPath;
     }
 
-    public function refreshComponentAutodiscovery()
-    {
-        app(LivewireComponentsFinder::class)->build();
-    }
+//    public function refreshComponentAutodiscovery()
+//    {
+//        app(LivewireComponentsFinder::class)->build();
+//    }
 
-    public function isReservedClassName($name)
+    public function isReservedClassName($name): bool
     {
-        return array_search($name, ['Parent', 'Component', 'Interface']) !== false;
+        return in_array($name, ['Parent', 'Component', 'Interface']);
     }
 }

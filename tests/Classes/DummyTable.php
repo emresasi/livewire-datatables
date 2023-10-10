@@ -2,6 +2,7 @@
 
 namespace Mediconesystems\LivewireDatatables\Tests\Classes;
 
+use Illuminate\Database\Eloquent\Model;
 use Mediconesystems\LivewireDatatables\BooleanColumn;
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\DateColumn;
@@ -12,9 +13,9 @@ use Mediconesystems\LivewireDatatables\Tests\Models\DummyModel;
 class DummyTable extends LivewireDatatable
 {
     public $perPage = 10;
-    public $model = DummyModel::class;
+    public string|null|Model $model = DummyModel::class;
 
-    public function columns()
+    public function getColumns(): array|Model
     {
         return [
             NumberColumn::name('id')

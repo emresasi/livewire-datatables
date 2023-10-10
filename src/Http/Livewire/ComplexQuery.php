@@ -2,6 +2,7 @@
 
 namespace Mediconesystems\LivewireDatatables\Http\Livewire;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -9,12 +10,12 @@ use Livewire\Component;
 
 class ComplexQuery extends Component
 {
-    public $columns;
-    public $persistKey;
-    public $savedQueries;
-    public $query = [];
-    public $rule = [];
-    public $rules = [
+    public array $columns;
+    public string $persistKey;
+    public array $savedQueries;
+    public array $query = [];
+    public array $rule = [];
+    public array $rules = [
         [
             'type' => 'group',
             'logic' => 'and',
@@ -24,26 +25,26 @@ class ComplexQuery extends Component
 
     protected $listeners = ['updateSavedQueries', 'resetQuery'];
 
-    public function mount($columns, $persistKey, $savedQueries = null)
+    public function mount($columns, $persistKey, $savedQueries = null): void
     {
         $this->columns = $columns;
         $this->persistKey = $persistKey;
         $this->savedQueries = $savedQueries;
     }
 
-    public function updateSavedQueries($savedQueries = null)
+    public function updateSavedQueries($savedQueries = null): void
     {
         $this->mount($this->columns, $this->persistKey, $savedQueries ?? $this->savedQueries);
     }
 
-    public function updatedRules($value, $key)
+    public function updatedRules($value, $key): void
     {
         $this->clearOperandAndValueWhenColumnChanged($key);
 
         $this->runQuery();
     }
 
-    public function clearOperandAndValueWhenColumnChanged($key)
+    public function clearOperandAndValueWhenColumnChanged($key): void
     {
         if (Str::endsWith($key, 'column')) {
             data_set($this->rules, str_replace('column', 'operand', $key), null);
@@ -51,7 +52,7 @@ class ComplexQuery extends Component
         }
     }
 
-    public function getRulesStringProperty($rules = null, $logic = 'and')
+    public function getRulesStringProperty($rules = null, $logic = 'and'): string
     {
         return collect($rules ?? $this->rules)->map(function ($rule) {
             return $rule['type'] === 'rule'
@@ -60,36 +61,36 @@ class ComplexQuery extends Component
         })->join(strtoupper(" $logic "));
     }
 
-    public function runQuery()
+    public function runQuery(): void
     {
         $this->validateRules();
 
-        $this->emit('complexQuery', count($this->rules[0]['content']) ? $this->rules : null);
+        $this->dispatch('complexQuery', rules: count($this->rules[0]['content']) ? $this->rules : null);
     }
 
-    public function saveQuery($name)
+    public function saveQuery($name): void
     {
-        $this->emitUp('saveQuery', $name, $this->rules);
+        $this->dispatch('saveQuery', name: $name, rules: $this->rules);
     }
 
-    public function loadRules($rules)
+    public function loadRules($rules): void
     {
         $this->rules = $rules;
         $this->runQuery();
     }
 
-    public function deleteRules($id)
+    public function deleteRules($id): void
     {
-        $this->emitUp('deleteQuery', $id);
+        $this->dispatch('deleteQuery', id: $id);
     }
 
-    public function resetQuery()
+    public function resetQuery(): void
     {
         $this->reset('rules');
         $this->runQuery();
     }
 
-    public function validateRules($rules = null, $key = '')
+    public function validateRules($rules = null, $key = ''): void
     {
         $rules = $rules ?? $this->rules[0]['content'];
 
@@ -115,7 +116,7 @@ class ComplexQuery extends Component
         });
     }
 
-    public function addRule($index)
+    public function addRule($index): void
     {
         $temp = Arr::get($this->rules, $index);
 
@@ -133,7 +134,7 @@ class ComplexQuery extends Component
         $this->validateRules();
     }
 
-    public function duplicateRule($index)
+    public function duplicateRule($index): void
     {
         $current = Arr::get($this->rules, Str::beforeLast($index, '.content'));
         $parentGroup = Arr::get($this->rules, Str::beforeLast(Str::beforeLast($index, '.content'), '.'));
@@ -145,13 +146,13 @@ class ComplexQuery extends Component
         $this->validateRules();
     }
 
-    public function moveRule($from, $to)
+    public function moveRule($from, $to): void
     {
         $mover = Arr::get($this->rules, Str::beforeLast($from, '.'));
         $newParent = Arr::get($this->rules, $to);
 
         if (is_array($newParent) && is_array($mover)) {
-            array_push($newParent, $mover);
+            $newParent[] = $mover;
             Arr::set($this->rules, $to, $newParent);
             Arr::pull($this->rules, Str::beforeLast($from, '.'));
         }
@@ -159,7 +160,7 @@ class ComplexQuery extends Component
         $this->runQuery();
     }
 
-    public function addGroup($index)
+    public function addGroup($index): void
     {
         $temp = Arr::get($this->rules, $index);
 
@@ -172,24 +173,24 @@ class ComplexQuery extends Component
         Arr::set($this->rules, $index, $temp);
     }
 
-    public function removeRule($index)
+    public function removeRule($index): void
     {
         Arr::pull($this->rules, Str::beforeLast($index, '.'));
 
         $this->runQuery();
     }
 
-    public function setRuleColumn($index, $value)
+    public function setRuleColumn($index, $value): void
     {
         $this->rules[$index]['column'] = $this->columns[$value];
     }
 
-    public function setRuleOperand($index, $value)
+    public function setRuleOperand($index, $value): void
     {
         $this->rules[$index]['operand'] = $value;
     }
 
-    public function setRuleValue($index, $value)
+    public function setRuleValue($index, $value): void
     {
         $this->rules[$index]['value'] = $value;
     }
@@ -221,7 +222,7 @@ class ComplexQuery extends Component
             : $operands[$this->getRuleColumn($key)['type']];
     }
 
-    public function render()
+    public function render(): View
     {
         return view('datatables::complex-query');
     }
