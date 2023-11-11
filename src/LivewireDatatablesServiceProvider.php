@@ -19,7 +19,7 @@ use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
 
 class LivewireDatatablesServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         Livewire::component('datatable', LivewireDatatable::class);
         Livewire::component('complex-query', ComplexQuery::class);
@@ -60,7 +60,7 @@ class LivewireDatatablesServiceProvider extends ServiceProvider
         $this->loadRelationMacros();
     }
 
-    public function loadBuilderMacros()
+    public function loadBuilderMacros(): void
     {
         Builder::macro('leftJoinIfNotJoined', function (...$params) {
             $isJoined = collect($this->joins)->pluck('table')->contains($params[0]);
@@ -75,7 +75,7 @@ class LivewireDatatablesServiceProvider extends ServiceProvider
         });
     }
 
-    public function loadEloquentBuilderMacros()
+    public function loadEloquentBuilderMacros(): void
     {
         EloquentBuilder::macro('customWithAggregate', function ($relations, $aggregate, $column, $alias = null) {
             if (empty($relations)) {
@@ -140,7 +140,7 @@ class LivewireDatatablesServiceProvider extends ServiceProvider
         });
     }
 
-    public function loadRelationMacros()
+    public function loadRelationMacros(): void
     {
         Relation::macro('getRelationExistenceAggregatesQuery', function (EloquentBuilder $query, EloquentBuilder $parentQuery, $aggregate, $column) {
             $distinct_aggregate = new Expression($aggregate . "(distinct {$column} separator ', ')");
@@ -166,12 +166,12 @@ class LivewireDatatablesServiceProvider extends ServiceProvider
         });
     }
 
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/livewire-datatables.php', 'livewire-datatables');
     }
 
-    protected function loadViewsFrom($path, $namespace)
+    protected function loadViewsFrom($path, $namespace): void
     {
         $this->callAfterResolving('view', function ($view) use ($path, $namespace) {
             if (

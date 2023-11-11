@@ -11,14 +11,14 @@ class LabelColumn extends Column
 {
     public string $type = 'label';
 
-    public $content = '';
+    public string $labelContent = '';
 
     /**
      * Which fixed string should always be displayed in every row of this column?
      */
-    public function content($content)
+    public function content($content): static
     {
-        $this->content = $content;
+        $this->labelContent = $content;
 
         return $this;
     }

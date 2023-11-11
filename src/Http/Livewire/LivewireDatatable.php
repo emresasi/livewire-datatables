@@ -65,6 +65,7 @@ class LivewireDatatable extends Component
     public $title;
     public $name;
     public array $columnGroups = [];
+    public array $freshColumns = [];
     public $userFilter;
     public bool $persistSearch = true;
     public bool $persistComplexQuery = true;
@@ -74,9 +75,7 @@ class LivewireDatatable extends Component
     public bool $persistFilters = true;
     public array $visibleSelected = [];
     public int $row = 1;
-
     public string $tablePrefix = '';
-
     public $actions;
     public $massActionOption;
 

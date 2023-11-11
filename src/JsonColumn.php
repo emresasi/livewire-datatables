@@ -5,14 +5,13 @@ namespace Mediconesystems\LivewireDatatables;
 class JsonColumn extends Column
 {
     public string $type = 'json';
-    public $callback;
+    public string|\Closure|array $callback;
 
     public function __construct()
     {
-        $this->callback = function ($value) {
-            return $value ? join(', ', json_decode($value)) : null;
+        parent::__construct();
+        $this->callback = static function ($value) {
+            return $value ? join(', ', json_decode($value, false, 512, JSON_THROW_ON_ERROR)) : null;
         };
-
-        return $this;
     }
 }
