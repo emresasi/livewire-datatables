@@ -16,7 +16,7 @@ class Column
     public string $label = '';
     public array $tooltip;
     public string $name;
-    public string|Expression $select = '';
+    public string|Expression|null $select = null;
     public array $joins;
     public string $base;
     public string $raw = '';
