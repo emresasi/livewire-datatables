@@ -34,8 +34,8 @@ class LivewireDatatable extends Component
     public Model|string|null $model;
     public $columns;
     public $search;
-    public string|int $sortIndex;
-    public $direction;
+    public string|int|null $sortIndex;
+    public bool $direction;
     public array $activeDateFilters = [];
     public array $activeDatetimeFilters = [];
     public array $activeTimeFilters = [];
