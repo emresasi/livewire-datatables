@@ -7,22 +7,22 @@ class NumberColumn extends Column
     public string $type = 'number';
     public string $headerAlign = 'right';
     public string $contentAlign = 'right';
-    public $round;
+    public int $roundPrecision = 0;
 
-    public function round($places = 0): self
+    public function round($precision = 0): static
     {
-        $this->round = $places;
+        $this->roundPrecision = $precision;
 
         $this->callback = function ($value) {
-            return round($value, $this->round);
+            return round($value, $this->roundPrecision);
         };
 
         return $this;
     }
 
-    public function format(int $places = 0): self
+    public function format(int $places = 0): static
     {
-        $this->callback = function ($value) use ($places) {
+        $this->callback = static function ($value) use ($places) {
             return number_format($value, $places, '.', ',');
         };
 
