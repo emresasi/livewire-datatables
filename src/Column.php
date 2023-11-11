@@ -30,7 +30,7 @@ class Column
     public string|array|Closure $callback;
     public bool $hidden;
     public string $scope;
-    public string $scopeFilter;
+    public ?string $scopeFilter;
     public array $params = [];
     public array $additionalSelects = [];
     public string $filterView;
