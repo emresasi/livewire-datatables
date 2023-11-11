@@ -3,8 +3,8 @@
 namespace Arm092\LivewireDatatables\Tests;
 
 use Livewire\Livewire;
-use Mediconesystems\LivewireDatatables\Livewire\LivewireDatatable;
-use Mediconesystems\LivewireDatatables\Tests\Models\DummyModel;
+use Arm092\LivewireDatatables\Livewire\LivewireDatatable;
+use Arm092\LivewireDatatables\Tests\Models\DummyModel;
 
 class LivewireDatatableTemplateTest extends TestCase
 {
@@ -15,7 +15,7 @@ class LivewireDatatableTemplateTest extends TestCase
 
         $subject = Livewire::test(LivewireDatatable::class, ['model' => DummyModel::class]);
 
-        $this->assertEquals('Mediconesystems\LivewireDatatables\Tests\Models\DummyModel', $subject->model);
+        $this->assertEquals(DummyModel::class, $subject->model);
         $this->assertIsArray($subject->columns);
         $this->assertEquals([
             0 => 'Id',
@@ -161,7 +161,7 @@ class LivewireDatatableTemplateTest extends TestCase
             'sort' => 'subject|asc',
         ]);
 
-        $this->assertEquals('Mediconesystems\LivewireDatatables\Tests\Models\DummyModel', $subject->model);
+        $this->assertEquals(DummyModel::class, $subject->model);
         $this->assertIsArray($subject->columns);
 
         $this->assertEquals(1, $subject->sort);

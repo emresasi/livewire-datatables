@@ -3,8 +3,8 @@
 namespace Arm092\LivewireDatatables\Tests;
 
 use Livewire\Livewire;
-use Mediconesystems\LivewireDatatables\Tests\classes\DummyTable;
-use Mediconesystems\LivewireDatatables\Tests\Models\DummyModel;
+use Arm092\LivewireDatatables\Tests\classes\DummyTable;
+use Arm092\LivewireDatatables\Tests\Models\DummyModel;
 
 class LivewireDatatableClassTest extends TestCase
 {

@@ -2,9 +2,9 @@
 
 namespace Arm092\LivewireDatatables\Tests;
 
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\ColumnSet;
-use Mediconesystems\LivewireDatatables\Tests\Models\DummyModel;
+use Arm092\LivewireDatatables\Column;
+use Arm092\LivewireDatatables\ColumnSet;
+use Arm092\LivewireDatatables\Tests\Models\DummyModel;
 
 class ColumnSetTest extends TestCase
 {

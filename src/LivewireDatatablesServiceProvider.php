@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Livewire\Livewire;
-use Mediconesystems\LivewireDatatables\Commands\DatatableMakeCommand;
-use Mediconesystems\LivewireDatatables\Commands\MakeDatatableCommand;
-use Mediconesystems\LivewireDatatables\Http\Controllers\FileExportController;
-use Mediconesystems\LivewireDatatables\Livewire\ComplexQuery;
-use Mediconesystems\LivewireDatatables\Livewire\LivewireDatatable;
+use Arm092\LivewireDatatables\Commands\DatatableMakeCommand;
+use Arm092\LivewireDatatables\Commands\MakeDatatableCommand;
+use Arm092\LivewireDatatables\Http\Controllers\FileExportController;
+use Arm092\LivewireDatatables\Livewire\ComplexQuery;
+use Arm092\LivewireDatatables\Livewire\LivewireDatatable;
 
 class LivewireDatatablesServiceProvider extends ServiceProvider
 {

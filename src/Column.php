@@ -7,7 +7,7 @@ use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Mediconesystems\LivewireDatatables\Livewire\LivewireDatatable;
+use Arm092\LivewireDatatables\Livewire\LivewireDatatable;
 
 class Column
 {

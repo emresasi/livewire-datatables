@@ -1,10 +1,10 @@
 <?php
 
 use Faker\Generator;
-use Mediconesystems\LivewireDatatables\Tests\Models\DummyBelongsToManyModel;
-use Mediconesystems\LivewireDatatables\Tests\Models\DummyHasManyModel;
-use Mediconesystems\LivewireDatatables\Tests\Models\DummyHasOneModel;
-use Mediconesystems\LivewireDatatables\Tests\Models\DummyModel;
+use Arm092\LivewireDatatables\Tests\Models\DummyBelongsToManyModel;
+use Arm092\LivewireDatatables\Tests\Models\DummyHasManyModel;
+use Arm092\LivewireDatatables\Tests\Models\DummyHasOneModel;
+use Arm092\LivewireDatatables\Tests\Models\DummyModel;
 
 /* @var Illuminate\Database\Eloquent\Factory $factory */
 

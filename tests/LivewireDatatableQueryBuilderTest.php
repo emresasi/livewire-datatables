@@ -2,11 +2,11 @@
 
 namespace Arm092\LivewireDatatables\Tests;
 
-use Mediconesystems\LivewireDatatables\Livewire\LivewireDatatable;
-use Mediconesystems\LivewireDatatables\Tests\Models\DummyBelongsToManyModel;
-use Mediconesystems\LivewireDatatables\Tests\Models\DummyHasManyModel;
-use Mediconesystems\LivewireDatatables\Tests\Models\DummyHasOneModel;
-use Mediconesystems\LivewireDatatables\Tests\Models\DummyModel;
+use Arm092\LivewireDatatables\Livewire\LivewireDatatable;
+use Arm092\LivewireDatatables\Tests\Models\DummyBelongsToManyModel;
+use Arm092\LivewireDatatables\Tests\Models\DummyHasManyModel;
+use Arm092\LivewireDatatables\Tests\Models\DummyHasOneModel;
+use Arm092\LivewireDatatables\Tests\Models\DummyModel;
 
 class LivewireDatatableQueryBuilderTest extends TestCase
 {

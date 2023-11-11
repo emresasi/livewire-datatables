@@ -44,7 +44,7 @@ composer require arm092/livewire-datatables
 ### Optional
 You don't need to, but if you like you can publish the config file and blade template assets:
 ```bash
-php artisan vendor:publish --provider="Mediconesystems\LivewireDatatables\LivewireDatatablesServiceProvider"
+php artisan vendor:publish --provider="Arm092\LivewireDatatables\LivewireDatatablesServiceProvider"
 ```
 This will enable you to modify the blade views and apply your own styling, the datatables views will be published to resources/livewire/datatables. The config file contains the default time and date formats used throughout
 > - This can be useful if you're using Purge CSS on your project, to make sure all the livewire-datatables classes get included
@@ -107,15 +107,15 @@ other as in the example above.
 
 ## Component Syntax
 
-### Create a livewire component that extends ```Mediconesystems\LivewireDatatables\LivewireDatatable```
-> ```php artisan make:livewire-datatable foo``` --> 'app/Http/Livewire/Foo.php'
+### Create a livewire component that extends ```Arm092\LivewireDatatables\LivewireDatatable```
+> ```php artisan make:livewire-datatable foo``` --> 'app/Livewire/Foo.php'
 
-> ```php artisan make:livewire-datatable tables.bar``` --> 'app/Http/Livewire/Tables/Bar.php'
+> ```php artisan make:livewire-datatable tables.bar``` --> 'app/Livewire/Tables/Bar.php'
 
 ### Provide a datasource by declaring public property ```$model``` **OR** public method ```builder()``` that returns an instance of ```Illuminate\Database\Eloquent\Builder```
-> ```php artisan make:livewire-datatable users-table --model=user``` --> 'app/Http/Livewire/UsersTable.php' with ```public $model = User::class```
+> ```php artisan make:livewire-datatable users-table --model=user``` --> 'app/Livewire/UsersTable.php' with ```public $model = User::class```
 
-### Declare a public method ```columns``` that returns an array containing one or more ```Mediconesystems\LivewireDatatables\Column```
+### Declare a public method ```columns``` that returns an array containing one or more ```Arm092\LivewireDatatables\Column```
 
 ## Columns
 Columns can be built using any of the static methods below, and then their attributes assigned using fluent method chains.
@@ -339,7 +339,7 @@ them with each other, you can use the CanPinRecords trait. Ensure to have at lea
 so the user can select records:
 
 ```php
-use Mediconesystems\LivewireDatatables\Traits\CanPinRecords;
+use Arm092\LivewireDatatables\Traits\CanPinRecords;
 
 class RecordTable extends LivewireDatatable
 {

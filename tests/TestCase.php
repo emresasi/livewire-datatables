@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Str;
 use Livewire\LivewireServiceProvider;
 use Maatwebsite\Excel\ExcelServiceProvider;
-use Mediconesystems\LivewireDatatables\LivewireDatatablesServiceProvider;
+use Arm092\LivewireDatatables\LivewireDatatablesServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Reedware\LaravelRelationJoins\LaravelRelationJoinServiceProvider;
 

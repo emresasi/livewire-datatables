@@ -4,7 +4,7 @@ namespace [namespace];
 
 use [use];
 use Illuminate\Database\Eloquent\Model;
-use Mediconesystems\LivewireDatatables\Http\Livewire\LivewireDatatable;
+use Arm092\LivewireDatatables\Livewire\LivewireDatatable;
 
 class [class] extends LivewireDatatable
 {

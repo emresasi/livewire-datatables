@@ -3,16 +3,16 @@
 namespace Arm092\LivewireDatatables\Tests\Classes;
 
 use Illuminate\Database\Eloquent\Model;
-use Mediconesystems\LivewireDatatables\BooleanColumn;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
-use Mediconesystems\LivewireDatatables\Livewire\LivewireDatatable;
-use Mediconesystems\LivewireDatatables\NumberColumn;
-use Mediconesystems\LivewireDatatables\Tests\Models\DummyModel;
+use Arm092\LivewireDatatables\BooleanColumn;
+use Arm092\LivewireDatatables\Column;
+use Arm092\LivewireDatatables\DateColumn;
+use Arm092\LivewireDatatables\Livewire\LivewireDatatable;
+use Arm092\LivewireDatatables\NumberColumn;
+use Arm092\LivewireDatatables\Tests\Models\DummyModel;
 
 class DummyTable extends LivewireDatatable
 {
-    public $perPage = 10;
+    public int $perPage = 10;
     public string|null|Model $model = DummyModel::class;
 
     public function getColumns(): array|Model

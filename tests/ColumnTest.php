@@ -3,8 +3,8 @@
 namespace Arm092\LivewireDatatables\Tests;
 
 use Illuminate\Support\Facades\DB;
-use Mediconesystems\LivewireDatatables\Column;
-use Mediconesystems\LivewireDatatables\DateColumn;
+use Arm092\LivewireDatatables\Column;
+use Arm092\LivewireDatatables\DateColumn;
 
 class ColumnTest extends TestCase
 {

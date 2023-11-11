@@ -4,8 +4,8 @@ namespace Arm092\LivewireDatatables\Tests;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
-use Mediconesystems\LivewireDatatables\Commands\MakeDatatableCommand;
-use Mediconesystems\LivewireDatatables\Tests\LivewireTestCase as TestCase;
+use Arm092\LivewireDatatables\Commands\MakeDatatableCommand;
+use Arm092\LivewireDatatables\Tests\LivewireTestCase as TestCase;
 
 class MakeDatatableCommandTest extends TestCase
 {

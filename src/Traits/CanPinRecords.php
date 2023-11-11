@@ -2,7 +2,7 @@
 
 namespace Arm092\LivewireDatatables\Traits;
 
-use Mediconesystems\LivewireDatatables\Action;
+use Arm092\LivewireDatatables\Action;
 
 /**
  * Use this trait to enable the functionality to pin specific records to the
@@ -14,7 +14,7 @@ use Mediconesystems\LivewireDatatables\Action;
  * 2) have session storage activated (it is by default)
  * 3) to enable the mass bulk action dropdown as described in:
  *
- * @link https://github.com/MedicOneSystems/livewire-datatables#mass-bulk-action
+ * @link https://github.com/arm092/livewire-datatables#mass-bulk-action
  */
 trait CanPinRecords
 {
