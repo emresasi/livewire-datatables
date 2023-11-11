@@ -34,11 +34,11 @@ class ColumnSetTest extends TestCase
 
         $this->assertEquals($name, $subject[$index]->label);
         $this->assertEquals($column, $subject[$index]->name);
-        $this->assertNull($subject[$index]->callback);
-        $this->assertNull($subject[$index]->filterable);
-        $this->assertNull($subject[$index]->scope);
+        $this->assertEmpty($subject[$index]->callback);
+        $this->assertFalse($subject[$index]->filterable);
+        $this->assertEmpty($subject[$index]->scope);
         $this->assertNull($subject[$index]->scopeFilter);
-        $this->assertNull($subject[$index]->hidden);
+        $this->assertFalse($subject[$index]->hidden);
     }
 
     public function fieldDataProvider()

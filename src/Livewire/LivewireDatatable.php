@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Database\SQLiteConnection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -34,7 +35,7 @@ class LivewireDatatable extends Component
     public Model|string|null $model;
     public $columns;
     public $search;
-    public string|int|null $sortIndex;
+    public string|int|null $sortIndex = null;
     public bool $direction;
     public array $activeDateFilters = [];
     public array $activeDatetimeFilters = [];
@@ -47,12 +48,12 @@ class LivewireDatatable extends Component
     public bool $hideHeader = false;
     public bool $hidePagination = false;
     public int $perPage = 10;
-    public string|array $include;
-    public string|array $exclude;
-    public string|array $hide;
-    public string|array $dates;
-    public string|array $times;
-    public string|array $searchable;
+    public string|array $include = '';
+    public string|array $exclude = '';
+    public string|array $hide = '';
+    public string|array $dates = '';
+    public string|array $times = '';
+    public string|array $searchable = '';
     public bool $exportable = false;
     public string $hideable;
     public array $params;
@@ -291,13 +292,11 @@ class LivewireDatatable extends Component
     }
 
     // save settings
-    public function dehydrate()
+    public function dehydrate(): void
     {
         if ($this->persistSearch) {
             session()->put($this->sessionStorageKey() . '_search', $this->search);
         }
-
-        return parent::dehydrate(); // @phpstan-ignore-line
     }
 
     public function getColumns(): array|Model
@@ -1072,19 +1071,19 @@ class LivewireDatatable extends Component
 
     public function getColumnFilterStatement($index): array|string
     {
-        if ($this->freshColumns[$index]['type'] === 'editable') {
+        if (isset($this->freshColumns[$index]) && $this->freshColumns[$index]['type'] === 'editable') {
             return [$this->getSelectStatements()[$index][0]];
         }
 
-        if ($this->freshColumns[$index]['filterOn']) {
+        if (isset($this->freshColumns[$index]) && $this->freshColumns[$index]['filterOn']) {
             return Arr::wrap($this->freshColumns[$index]['filterOn']);
         }
 
-        if ($this->freshColumns[$index]['scope']) {
+        if (isset($this->freshColumns[$index]) && $this->freshColumns[$index]['scope']) {
             return 'scope';
         }
 
-        if ($this->freshColumns[$index]['raw']) {
+        if (isset($this->freshColumns[$index]) && $this->freshColumns[$index]['raw']) {
             return [(string)$this->freshColumns[$index]['sort']];
         }
 
@@ -1170,7 +1169,7 @@ class LivewireDatatable extends Component
         return $this->paginationControls() ?? $this->paginationControls;
     }
 
-    public function getResultsProperty(): Collection
+    public function getResultsProperty(): Collection|LengthAwarePaginator
     {
         $this->row = 1;
 
@@ -1417,10 +1416,10 @@ class LivewireDatatable extends Component
             foreach ($this->activeSelectFilters as $index => $activeSelectFilter) {
                 $query->where(function ($query) use ($index, $activeSelectFilter) {
                     foreach ($activeSelectFilter as $value) {
-                        if ($this->columnIsAggregateRelation($this->freshColumns[$index])) {
+                        if (isset($this->freshColumns[$index]) && $this->columnIsAggregateRelation($this->freshColumns[$index])) {
                             $this->addAggregateFilter($query, $index, $activeSelectFilter);
                         } else if (!$this->addScopeSelectFilter($query, $index, $value)) {
-                            if ($this->freshColumns[$index]['type'] === 'json') {
+                            if (isset($this->freshColumns[$index]) && $this->freshColumns[$index]['type'] === 'json') {
                                 $query->where(function ($query) use ($value, $index) {
                                     foreach ($this->getColumnFilterStatement($index) as $column) {
                                         $query->whereRaw('LOWER(' . $this->tablePrefix . $column . ') like ?', [mb_strtolower("%$value%")]);
@@ -1455,13 +1454,13 @@ class LivewireDatatable extends Component
             foreach ($this->activeBooleanFilters as $index => $value) {
                 if ($this->getColumnFilterStatement($index) === 'scope') {
                     $this->addScopeSelectFilter($query, $index, $value);
-                } else if ($this->columnIsAggregateRelation($this->freshColumns[$index])) {
+                } else if (isset($this->freshColumns[$index]) && $this->columnIsAggregateRelation($this->freshColumns[$index])) {
                     $this->addAggregateFilter($query, $index, $value);
-                } else if ($this->freshColumns[$index]['type'] === 'string') {
+                } else if (isset($this->freshColumns[$index]) && $this->freshColumns[$index]['type'] === 'string') {
                     if ($value == 1) {
                         $query->whereNotNull($this->getColumnFilterStatement($index)[0])
                               ->where($this->getColumnFilterStatement($index)[0], '<>', '');
-                    } else if ($value != '') {
+                    } else if ($value !== '') {
                         $query->where(function ($query) use ($index) {
                             $query->whereNull(DB::raw($this->getColumnFilterStatement($index)[0]))
                                   ->orWhere(DB::raw($this->getColumnFilterStatement($index)[0]), '');
@@ -1491,7 +1490,7 @@ class LivewireDatatable extends Component
             foreach ($this->activeTextFilters as $index => $activeTextFilter) {
                 $query->where(function ($query) use ($index, $activeTextFilter) {
                     foreach ($activeTextFilter as $value) {
-                        if ($this->columnIsRelation($this->freshColumns[$index])) {
+                        if (isset($this->freshColumns[$index]) && $this->columnIsRelation($this->freshColumns[$index])) {
                             $this->addAggregateFilter($query, $index, $activeTextFilter);
                         } else {
                             $query->orWhere(function ($query) use ($index, $value) {
@@ -1516,7 +1515,7 @@ class LivewireDatatable extends Component
         }
         $this->query->where(function ($query) {
             foreach ($this->activeNumberFilters as $index => $filter) {
-                if ($this->columnIsAggregateRelation($this->freshColumns[$index])) {
+                if (isset($this->freshColumns[$index]) && $this->columnIsAggregateRelation($this->freshColumns[$index])) {
                     $this->addAggregateFilter($query, $index, $filter);
                 } else {
                         $this->addScopeNumberFilter($query, $index, [
@@ -1649,7 +1648,7 @@ class LivewireDatatable extends Component
         });
     }
 
-    public function mapCallbacks($paginatedCollection, $export = false): Collection
+    public function mapCallbacks($paginatedCollection, $export = false): Collection|LengthAwarePaginator
     {
         $paginatedCollection->collect()->map(function ($row, $i) use ($export) {
             foreach ($row as $name => $value) {
@@ -1750,7 +1749,7 @@ class LivewireDatatable extends Component
 
     public function export(string $filename = 'DatatableExport.xlsx'): BinaryFileResponse
     {
-        $this->forgetComputed();
+//        $this->forgetComputed();
 
         $export = new DatatableExport($this->getExportResultsSet());
         $export->setFilename($filename);
@@ -1810,7 +1809,7 @@ class LivewireDatatable extends Component
             $this->visibleSelected = $this->selected;
         }
 
-        $this->forgetComputed();
+//        $this->forgetComputed();
     }
 
     public function updatedSelected(): void

@@ -146,7 +146,7 @@ class LivewireDatatableQueryBuilderTest extends TestCase
 
         $subject->doNumberFilterStart(1, 123);
         // $subject->doNumberFilterEnd(1, 456);
-        $subject->forgetComputed();
+        // $subject->forgetComputed();
 
         $this->assertEquals('select "dummy_has_many_models"."id" as "id", "dummy_models"."name" as "dummy_model.name" from "dummy_has_many_models" left join "dummy_models" on "dummy_models"."id" = "dummy_has_many_models"."dummy_model_id" where (dummy_models.name >= ?) order by dummy_has_many_models.id desc', $subject->getQuery()->toSql());
 
