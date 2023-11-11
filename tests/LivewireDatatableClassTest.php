@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediconesystems\LivewireDatatables\Tests;
+namespace Arm092\LivewireDatatables\Tests;
 
 use Livewire\Livewire;
 use Mediconesystems\LivewireDatatables\Tests\classes\DummyTable;

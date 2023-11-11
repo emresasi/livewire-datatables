@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediconesystems\LivewireDatatables\Commands;
+namespace Arm092\LivewireDatatables\Commands;
 
 class DatatableMakeCommand extends MakeDatatableCommand
 {

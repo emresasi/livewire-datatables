@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediconesystems\LivewireDatatables\Tests;
+namespace Arm092\LivewireDatatables\Tests;
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;

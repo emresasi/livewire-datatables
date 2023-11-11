@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediconesystems\LivewireDatatables\Livewire;
+namespace Arm092\LivewireDatatables\Livewire;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;

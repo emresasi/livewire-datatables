@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediconesystems\LivewireDatatables;
+namespace Arm092\LivewireDatatables;
 
 use Closure;
 use Illuminate\Contracts\Database\Query\Expression;

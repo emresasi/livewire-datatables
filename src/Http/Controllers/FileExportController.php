@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediconesystems\LivewireDatatables\Http\Controllers;
+namespace Arm092\LivewireDatatables\Http\Controllers;
 
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;

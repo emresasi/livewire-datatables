@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediconesystems\LivewireDatatables;
+namespace Arm092\LivewireDatatables;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;

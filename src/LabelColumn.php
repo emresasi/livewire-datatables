@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediconesystems\LivewireDatatables;
+namespace Arm092\LivewireDatatables;
 
 /**
  * Use this column to simply display a custom header ("label") and a fixed content ("content").

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediconesystems\LivewireDatatables\Tests\Classes;
+namespace Arm092\LivewireDatatables\Tests\Classes;
 
 use Illuminate\Database\Eloquent\Model;
 use Mediconesystems\LivewireDatatables\BooleanColumn;

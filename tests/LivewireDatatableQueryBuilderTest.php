@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediconesystems\LivewireDatatables\Tests;
+namespace Arm092\LivewireDatatables\Tests;
 
 use Mediconesystems\LivewireDatatables\Livewire\LivewireDatatable;
 use Mediconesystems\LivewireDatatables\Tests\Models\DummyBelongsToManyModel;

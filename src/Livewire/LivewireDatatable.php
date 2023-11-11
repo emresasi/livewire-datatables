@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediconesystems\LivewireDatatables\Livewire;
+namespace Arm092\LivewireDatatables\Livewire;
 
 use Exception;
 use Illuminate\Database\Eloquent\Builder;

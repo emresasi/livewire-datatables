@@ -1,6 +1,6 @@
 <?php
 
-namespace Mediconesystems\LivewireDatatables\Traits;
+namespace Arm092\LivewireDatatables\Traits;
 
 trait WithPresetTimeFilters
 {
