@@ -18,14 +18,14 @@ class Column implements \ArrayAccess
     public string $name;
     public string|Expression|null $select = null;
     public array $joins;
-    public string $base;
+    public ?string $base = null;
     public string $raw = '';
     public bool $searchable = false;
     public bool $sortable = false;
-    public string|array $filterOn;
+    public string|array|null $filterOn = null;
     public bool|array $filterable = false;
     public bool $hideable;
-    public string $sort;
+    public ?string $sort = null;
     public bool|string $defaultSort;
     public string|array|Closure|null $callback = null;
     public bool $hidden = false;
@@ -557,7 +557,7 @@ class Column implements \ArrayAccess
 
     public function offsetExists(mixed $offset): bool
     {
-        return property_exists($this, $offset);
+        return property_exists($this, $offset) && !is_null($this->{$offset});
     }
 
     public function offsetGet(mixed $offset): mixed
