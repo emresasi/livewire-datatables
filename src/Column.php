@@ -254,8 +254,9 @@ class Column implements \ArrayAccess
         return $this;
     }
 
-    public function filterable(?array $options = null, ?string $scopeFilter = null): static
+    public function filterable(array|Collection $options = [], ?string $scopeFilter = null): static
     {
+        $options = $options instanceof Collection ? $options->toArray() : $options;
         $this->filterable = $options ?: true;
         $this->scopeFilter = $scopeFilter;
 
