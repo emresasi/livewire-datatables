@@ -133,7 +133,7 @@
                                 </div>
                             @else
                                 <div class="table-cell overflow-hidden align-top">
-                                    @isset($column['filterable'])
+                                    @if($column['filterable'])
                                         @if( is_iterable($column['filterable']) )
                                             <div wire:key="{{ $index }}">
                                                 @include('datatables::filters.select', ['index' => $index, 'name' => $column['label'], 'options' => $column['filterable']])
@@ -143,7 +143,7 @@
                                                 @include('datatables::filters.' . ($column['filterView'] ?? $column['type']), ['index' => $index, 'name' => $column['label']])
                                             </div>
                                         @endif
-                                    @endisset
+                                    @endif
                                 </div>
                             @endif
                         @endforeach
