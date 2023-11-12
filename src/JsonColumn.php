@@ -5,7 +5,7 @@ namespace Arm092\LivewireDatatables;
 class JsonColumn extends Column
 {
     public string $type = 'json';
-    public string|\Closure|array $callback;
+    public string|\Closure|array|null $callback;
 
     public function __construct()
     {
