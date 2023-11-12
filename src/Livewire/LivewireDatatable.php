@@ -45,28 +45,28 @@ class LivewireDatatable extends Component
     public array $activeTextFilters = [];
     public array $activeNumberFilters = [];
     public array $defaultFilters = [];
-    public bool $hideHeader = false;
-    public bool $hidePagination = false;
-    public int $perPage = 10;
-    public string|array $include = '';
-    public string|array $exclude = '';
-    public string|array $hide = '';
-    public string|array $dates = '';
-    public string|array $times = '';
-    public string|array $searchable = '';
+    public ?bool $hideHeader = false;
+    public ?bool $hidePagination = false;
+    public ?int $perPage = null;
+    public string|array $include = [];
+    public string|array $exclude = [];
+    public string|array $hide = [];
+    public string|array $dates = [];
+    public string|array $times = [];
+    public string|array $searchable = [];
     public bool $exportable = false;
-    public string $hideable;
+    public ?string $hideable = null;
     public array $params;
     public array $selected = [];
-    public string $beforeTableSlot;
-    public string $buttonsSlot;
-    public string $afterTableSlot;
+    public ?string $beforeTableSlot=null;
+    public ?string $buttonsSlot=null;
+    public ?string $afterTableSlot=null;
     public $complex;
     public $complexQuery;
     public $title;
     public $name;
     public array $columnGroups = [];
-    public array $freshColumns = [];
+//    public array $freshColumns = [];
     public $userFilter;
     public bool $persistSearch = true;
     public bool $persistComplexQuery = true;
@@ -241,7 +241,7 @@ class LivewireDatatable extends Component
         $dates = [],
         $times = [],
         $searchable = [],
-        $sort = null,
+        $sortIndex = null,
         $hideHeader = null,
         $hidePagination = null,
         $perPage = null,
@@ -261,7 +261,7 @@ class LivewireDatatable extends Component
                      'dates',
                      'times',
                      'searchable',
-                     'sort',
+                     'sortIndex',
                      'hideHeader',
                      'hidePagination',
                      'exportable',
@@ -270,7 +270,7 @@ class LivewireDatatable extends Component
                      'buttonsSlot',
                      'afterTableSlot',
                  ] as $property) {
-            $this->$property = $this->$property ?? $$property;
+            $this->$property = $this->$property ?: $$property;
         }
 
         $this->params = $params;

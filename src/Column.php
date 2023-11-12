@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Arm092\LivewireDatatables\Livewire\LivewireDatatable;
 
-class Column
+class Column implements \ArrayAccess
 {
     public string $type = 'string';
     public int $index = 0;
@@ -553,5 +553,25 @@ class Column
         $this->maxWidth = $maxWidth;
 
         return $this;
+    }
+
+    public function offsetExists(mixed $offset): bool
+    {
+        return property_exists($this, $offset);
+    }
+
+    public function offsetGet(mixed $offset): mixed
+    {
+        return $this->{$offset};
+    }
+
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        $this->{$offset} = $value;
+    }
+
+    public function offsetUnset(mixed $offset): void
+    {
+        $this->{$offset} = null;
     }
 }
