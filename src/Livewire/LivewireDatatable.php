@@ -392,7 +392,7 @@ class LivewireDatatable extends Component
     public function getSelectStatements($withAlias = false, $export = false)
     {
         return $this->processedColumns->columns
-            ->reject(fn($column) => $column->scope || $column->type === 'label' || ($export && $column->preventExport))
+            ->reject(fn ($column) => $column->scope || $column->type === 'label' || ($export && $column->preventExport))
             ->map(function ($column) {
                 if ($column->select) {
                     return $column;
@@ -434,7 +434,7 @@ class LivewireDatatable extends Component
 
                     return $column->select . ' AS ' . $column->name;
                 });
-            }, fn($columns) => $columns->map->select);
+            }, fn ($columns) => $columns->map->select);
     }
 
     protected function resolveColumnName($column, $additional = null)
@@ -1654,9 +1654,9 @@ class LivewireDatatable extends Component
                 if ($this->search && !config('livewire-datatables.suppress_search_highlights') && $this->searchableColumns()->firstWhere('name', $name)) {
                     $row->$name = $this->highlight($row->$name, $this->search);
                 }
-                if ($export && isset($this->export_callbacks[$name])) {
+                if ($export && isset($this->exportCallbacks[$name]) && !is_null($this->exportCallbacks[$name])) {
                     $values = Str::contains($value, static::SEPARATOR) ? explode(static::SEPARATOR, $value) : [$value, $row];
-                    $row->$name = $this->export_callbacks[$name](...$values);
+                    $row->$name = $this->exportCallbacks[$name](...$values);
                 } else if (isset($this->editables[$name])) {
                     $row->$name = view('datatables::editable', [
                         'value'  => $value,
