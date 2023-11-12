@@ -1667,7 +1667,7 @@ class LivewireDatatable extends Component
                     ]);
                 } else if (isset($this->callbacks[$name]) && is_string($this->callbacks[$name])) {
                     $row->$name = $this->{$this->callbacks[$name]}($value, $row);
-                } else if (Str::startsWith($name, 'callback_')) {
+                } else if (isset($this->callbacks[$name]) && Str::startsWith($name, 'callback_')) {
                     $row->$name = $this->callbacks[$name](...explode(static::SEPARATOR, $value));
                 } else if (isset($this->callbacks[$name]) && is_callable($this->callbacks[$name])) {
                     $row->$name = $this->callbacks[$name]($value, $row);
