@@ -41,7 +41,7 @@ class Column implements \ArrayAccess
     public string $minWidth;
     public string $maxWidth;
     public Closure $exportCallback;
-    protected string $aggregate;
+    public string $aggregate;
 
     /**
      * @var bool should the sum of all summarizable cells in this column be

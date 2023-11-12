@@ -58,9 +58,9 @@ class LivewireDatatable extends Component
     public ?string $hideable = null;
     public array $params;
     public array $selected = [];
-    public ?string $beforeTableSlot=null;
-    public ?string $buttonsSlot=null;
-    public ?string $afterTableSlot=null;
+    public ?string $beforeTableSlot = null;
+    public ?string $buttonsSlot = null;
+    public ?string $afterTableSlot = null;
     public $complex;
     public $complexQuery;
     public $title;
@@ -392,9 +392,8 @@ class LivewireDatatable extends Component
     public function getSelectStatements($withAlias = false, $export = false)
     {
         return $this->processedColumns->columns
-            ->reject(function ($column) use ($export) {
-                return $column->scope || $column->type === 'label' || ($export && $column->preventExport);
-            })->map(function ($column) {
+            ->reject(fn($column) => $column->scope || $column->type === 'label' || ($export && $column->preventExport))
+            ->map(function ($column) {
                 if ($column->select) {
                     return $column;
                 }
@@ -435,9 +434,7 @@ class LivewireDatatable extends Component
 
                     return $column->select . ' AS ' . $column->name;
                 });
-            }, function ($columns) {
-                return $columns->map->select;
-            });
+            }, fn($columns) => $columns->map->select);
     }
 
     protected function resolveColumnName($column, $additional = null)
