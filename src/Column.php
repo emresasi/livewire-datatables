@@ -16,7 +16,7 @@ class Column implements \ArrayAccess
     public string $label = '';
     public array $tooltip;
     public string $name;
-    public string|Expression|null $select = null;
+    public string|array|Expression|null $select = null;
     public array $joins;
     public ?string $base = null;
     public string $raw = '';
