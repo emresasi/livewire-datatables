@@ -13,7 +13,7 @@ class BooleanColumn extends Column
     {
         parent::__construct();
 
-        $this->callback = static fn ($value)=> view('datatables::boolean', ['value' => $value]);
+        $this->callback = static fn ($value) => view('datatables::boolean', ['value' => $value]);
 
         $this->exportCallback = static fn ($value) => $value ? 'Yes' : 'No';
     }

@@ -40,7 +40,7 @@ class Column implements \ArrayAccess
     public string $width;
     public string $minWidth;
     public string $maxWidth;
-    public Closure $exportCallback;
+    public ?Closure $exportCallback = null;
     public string $aggregate;
 
     /**
