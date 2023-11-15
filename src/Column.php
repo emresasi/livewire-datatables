@@ -36,7 +36,7 @@ class Column implements \ArrayAccess
     public string $filterView;
     public string $headerAlign = 'left';
     public string $contentAlign = 'left';
-    public bool $preventExport;
+    public bool $preventExport = false;
     public string $width;
     public string $minWidth;
     public string $maxWidth;
