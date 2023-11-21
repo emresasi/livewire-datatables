@@ -1035,7 +1035,7 @@ class LivewireDatatable extends Component
         $this->setPage(1);
         $this->setSessionStoredFilters();
 
-        $this->dispatch('complex-query')->to('resetQuery');
+        $this->dispatch('resetQuery')->to('complex-query');
     }
 
     public function removeBooleanFilter($column): void
@@ -1544,12 +1544,12 @@ class LivewireDatatable extends Component
 
         $this->query->where(function ($query) {
             foreach ($this->activeDateFilters as $index => $filter) {
-                if (!((isset($filter['start']) && $filter['start'] != '') || (isset($filter['end']) && $filter['end'] != ''))) {
+                if (!((isset($filter['start']) && $filter['start']) || (isset($filter['end']) && $filter['end']))) {
                     break;
                 }
                 $query->whereBetween($this->getColumnFilterStatement($index)[0], [
-                    isset($filter['start']) && $filter['start'] != '' ? $filter['start'] : config('livewire-datatables.default_time_start', '0000-00-00'),
-                    isset($filter['end']) && $filter['end'] != '' ? $filter['end'] : config('livewire-datatables.default_time_end', '9999-12-31'),
+                    isset($filter['start']) && $filter['start'] ? $filter['start'] : config('livewire-datatables.default_time_start', '0000-00-00'),
+                    isset($filter['end']) && $filter['end'] ? $filter['end'] : config('livewire-datatables.default_time_end', '9999-12-31'),
                 ]);
             }
         });
