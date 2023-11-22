@@ -14,3 +14,8 @@
 - Minimal Laravel version is 9.0 now
 - Minimal Livewire version is 3.0 now
 
+If you have livewire 2 on your project, you need to upgrade it too. You can find the upgrade guide [here](https://livewire.laravel.com/docs/upgrading).
+Change `"livewire/livewire"` to version `"^3.0.0"`, `"arm092/livewire-datatables"` to version `"^2.0.0"` and run `composer update` command. 
+After it, you can run `php artisan livewire:upgrade` command to upgrade your livewire components as mentioned in livewire migrate guide.
+
+#### If you have any problems with package, please open an issue on [github](https://github.com/arm092/livewire-datatables/issues)
