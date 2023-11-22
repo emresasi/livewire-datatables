@@ -38,6 +38,7 @@
         "illuminate/support": "^9.0|^10.0",
         "livewire/livewire": "^3",
         "maatwebsite/excel": "^3.1.48",
+        "psr/simple-cache": "^3.0.0",
         "reedware/laravel-relation-joins": "^4.0.1"
     },
     "require-dev": {
