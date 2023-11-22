@@ -20,8 +20,8 @@
 ![screenshot](resources/images/screenshot.png "Screenshot")
 
 ## Requirements
-- [Laravel 7, 8, 9 or 10](https://laravel.com/docs/10.x)
-- [Livewire](https://laravel-livewire.com/)
+- [Laravel 9 or 10](https://laravel.com/docs/10.x)
+- [Livewire 3](https://laravel-livewire.com/)
 - [Tailwind](https://tailwindcss.com/)
 - [Alpine JS](https://github.com/alpinejs/alpine)
 
@@ -32,14 +32,6 @@ You can install the package via composer:
 ```bash
 composer require arm092/livewire-datatables
 ```
-
-[//]: # (If you use laravel 9 first execute)
-
-[//]: # (```bash)
-
-[//]: # (composer require psr/simple-cache:^1.0 maatwebsite/excel)
-
-[//]: # (```)
 
 ### Optional
 You don't need to, but if you like you can publish the config file and blade template assets:
@@ -63,7 +55,7 @@ somewhere in your CSS
 ```html
 ...
 
-<livewire:datatable model="App\User" name="all-users" />
+<livewire:datatable model="App\Models\User" name="all-users" />
 
 ...
 ```
@@ -72,7 +64,7 @@ somewhere in your CSS
 - There are many ways to modify the table by passing additional properties into the component:
 ```html
 <livewire:datatable
-    model="App\User"
+    model="App\Models\User"
     name="users"
     include="id, name, dob, created_at"
     dates="dob"
@@ -108,12 +100,12 @@ other as in the example above.
 ## Component Syntax
 
 ### Create a livewire component that extends ```Arm092\LivewireDatatables\LivewireDatatable```
-> ```php artisan make:livewire-datatable foo``` --> 'app/Livewire/Foo.php'
+> ```php artisan make:livewire-datatable foo``` --> 'app/Livewire/Datatables/Foo.php'
 
-> ```php artisan make:livewire-datatable tables.bar``` --> 'app/Livewire/Tables/Bar.php'
+> ```php artisan make:livewire-datatable foo.bar``` --> 'app/Livewire/Datatables/Foo/Bar.php'
 
 ### Provide a datasource by declaring public property ```$model``` **OR** public method ```builder()``` that returns an instance of ```Illuminate\Database\Eloquent\Builder```
-> ```php artisan make:livewire-datatable users-table --model=user``` --> 'app/Livewire/UsersTable.php' with ```public $model = User::class```
+> ```php artisan make:livewire-datatable users-table --model=user``` --> 'app/Livewire/Datatables/UsersTable.php' with ```public $model = User::class```
 
 ### Declare a public method ```columns``` that returns an array containing one or more ```Arm092\LivewireDatatables\Column```
 
@@ -243,7 +235,7 @@ NumberColumn::name('students.age:max')->label('Student Max'),
 ### Column Groups
 
 When you have a very big table with a lot of columns, it is possible to create 'column groups' that allows the user to toggle the visibility of a whole group at once. Use `->group('NAME')` at any column to achieve this.
-You can human readable labels and translations of your groups via the `groupLabels` property of your table:
+You can human-readable labels and translations of your groups via the `groupLabels` property of your table:
 
 ```php
 class GroupDemoTable extends LivewireDatatable
@@ -509,7 +501,7 @@ Just add ```$complex = true``` to your Datatable Class and all filterable column
 ---
 **Persisting Queries** (Requires AlpineJS v3 with $persist plugin)
 - Add ```$persistComplexQuery = true``` to your class and queries will be stored in browser localstorage.
-- By default the localstorage key will be the class name. You can provide your own by setting the public property ```$persistKey``` or overriding ```getPersistKeyProperty()``` on the Datatable Class
+- By default, the localstorage key will be the class name. You can provide your own by setting the public property ```$persistKey``` or overriding ```getPersistKeyProperty()``` on the Datatable Class
 - eg: for user-specific persistence:
 
 ```php
@@ -523,8 +515,8 @@ public function getPersistKeyProperty()
 
 If you want to permanently save queries you must provide 3 methods for adding, deleting and retrieving your saved queries using whatever logic you like:
 
-- ```public function saveQuery(String $name, Array $rules)```
-- ```public function deleteQuery(Int $id)```
+- ```public function saveQuery(string $name, array $rules)```
+- ```public function deleteQuery(int $id)```
 - ```public function getSavedQueries()```
 
 * In your save and delete methods, be sure to dispatch an ```updateSavedQueries``` livewire event and pass a fresh array of results (see example below)
@@ -569,7 +561,7 @@ class TableWithSaving extends LivewireDatatable
 {
     ...
 
-    public function saveQuery($name, $rules)
+    public function saveQuery($name, $rules): void
     {
         Auth::user()->complex_queries()->create([
             'table' => $this->name,
@@ -580,14 +572,14 @@ class TableWithSaving extends LivewireDatatable
         $this->dispatch('updateSavedQueries', $this->getSavedQueries());
     }
 
-    public function deleteQuery($id)
+    public function deleteQuery($id): void
     {
         ComplexQuery::destroy($id);
 
         $this->dispatch('updateSavedQueries', $this->getSavedQueries());
     }
 
-    public function getSavedQueries()
+    public function getSavedQueries(): void
     {
         return Auth::user()->complex_queries()->where('table', $this->name)->get();
     }
@@ -604,12 +596,12 @@ There are methods for applying styles to rows and cells. ```rowClasses``` receiv
 
 For example:
 ```php
-public function rowClasses($row, $loop)
+public function rowClasses($row, $loop): string
 {
     return 'divide-x divide-gray-100 text-sm text-gray-900 ' . ($this->rowIsSelected($row) ? 'bg-yellow-100' : ($row->{'car.model'} === 'Ferrari' ? 'bg-red-500' : ($loop->even ? 'bg-gray-100' : 'bg-gray-50')));
 }
 
-public function cellClasses($row, $column)
+public function cellClasses($row, $column): string
 {
     return 'text-sm ' . ($this->rowIsSelected($row) ? ' text-gray-900' : ($row->{'car.model'} === 'Ferrari' ? ' text-white' : ' text-gray-900'));
 }
@@ -626,6 +618,3 @@ You could also override the render method in your table's class to provide diffe
 - [Tailwind CSS](https://tailwindcss.com/)
 - [AlpineJS](https://github.com/alpinejs/alpine)
 - [livewire-datatables by MedicOneSystems](https://github.com/MedicOneSystems/livewire-datatables)
-- [livewire-tables by coryrose1](https://github.com/coryrose1/livewire-tables)
-- [laravel-livewire-datatables by kdion4891](https://github.com/kdion4891/laravel-livewire-tables)
-- [Jonathan Reinink\'s Eloquent course](https://eloquent-course.reinink.ca/)
