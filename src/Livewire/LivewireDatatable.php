@@ -1830,12 +1830,12 @@ class LivewireDatatable extends Component
         // Override this method with your own method for saving
     }
 
-    public function deleteQuery($id)
+    public function deleteQuery($id): void
     {
         // Override this method with your own method for deleting
     }
 
-    public function getSavedQueries()
+    public function getSavedQueries(): void
     {
         // Override this method with your own method for getting saved queries
     }
@@ -1848,7 +1848,7 @@ class LivewireDatatable extends Component
         return [];
     }
 
-    public function rowClasses($row, $loop)
+    public function rowClasses($row, $loop): string
     {
         // Override this method with your own method for adding classes to a row
         if ($this->rowIsSelected($row)) {
@@ -1862,7 +1862,7 @@ class LivewireDatatable extends Component
         return config('livewire-datatables.default_classes.row.odd', 'divide-x divide-gray-100 text-sm text-gray-900 bg-gray-50');
     }
 
-    public function cellClasses($row, $column)
+    public function cellClasses($row, $column): string
     {
         // Override this method with your own method for adding classes to a cell
         return config('livewire-datatables.default_classes.cell', 'text-sm text-gray-900');
