@@ -26,7 +26,7 @@ class Column implements \ArrayAccess
     public bool|array $filterable = false;
     public bool $hideable;
     public ?string $sort = null;
-    public bool|string $defaultSort;
+    public bool|string $defaultSort = false;
     public string|array|Closure|null $callback = null;
     public bool $hidden = false;
     public ?string $scope = null;
