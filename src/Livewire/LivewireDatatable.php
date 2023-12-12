@@ -32,11 +32,11 @@ class LivewireDatatable extends Component
     use WithPagination, WithCallbacks, WithPresetDateFilters, WithPresetTimeFilters;
 
     public const SEPARATOR = '|**lwdt**|';
-    public Model|string|null $model;
+    public Model|string|null $model = null;
     public $columns;
     public $search;
     public string|int|null $sortIndex = null;
-    public bool $direction;
+    public bool $direction = true;
     public array $activeDateFilters = [];
     public array $activeDatetimeFilters = [];
     public array $activeTimeFilters = [];
@@ -56,7 +56,7 @@ class LivewireDatatable extends Component
     public string|array $searchable = [];
     public bool $exportable = false;
     public ?string $hideable = null;
-    public array $params;
+    public array $params = [];
     public array $selected = [];
     public ?string $beforeTableSlot = null;
     public ?string $buttonsSlot = null;
@@ -90,7 +90,7 @@ class LivewireDatatable extends Component
      */
     public array $groupLabels = [];
 
-    protected ?Builder $query;
+    protected ?Builder $query = null;
     protected $listeners = [
         'refreshLivewireDatatable',
         'complexQuery',
