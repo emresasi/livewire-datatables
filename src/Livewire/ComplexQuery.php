@@ -23,8 +23,6 @@ class ComplexQuery extends Component
         ],
     ];
 
-    protected $listeners = ['updateSavedQueries', 'resetQuery'];
-
     public function mount($columns, $persistKey, $savedQueries = null): void
     {
         $this->columns = $columns;
@@ -32,6 +30,7 @@ class ComplexQuery extends Component
         $this->savedQueries = $savedQueries;
     }
 
+    #[On('updateSavedQueries')]
     public function updateSavedQueries($savedQueries = null): void
     {
         $this->mount($this->columns, $this->persistKey, $savedQueries ?? $this->savedQueries);
@@ -56,8 +55,8 @@ class ComplexQuery extends Component
     {
         return collect($rules ?? $this->rules)->map(function ($rule) {
             return $rule['type'] === 'rule'
-                    ? implode(' ', [$this->columns[$rule['content']['column']]['label'] ?? '', $rule['content']['operand'] ?? '', $rule['content']['value'] ?? ''])
-                    : '(' . $this->getRulesStringProperty($rule['content'], $rule['logic']) . ')';
+                ? implode(' ', [$this->columns[$rule['content']['column']]['label'] ?? '', $rule['content']['operand'] ?? '', $rule['content']['value'] ?? ''])
+                : '(' . $this->getRulesStringProperty($rule['content'], $rule['logic']) . ')';
         })->join(strtoupper(" $logic "));
     }
 
@@ -84,6 +83,7 @@ class ComplexQuery extends Component
         $this->dispatch('deleteQuery', id: $id);
     }
 
+    #[On('reset-query')]
     public function resetQuery(): void
     {
         $this->reset('rules');
@@ -99,11 +99,11 @@ class ComplexQuery extends Component
                 $v = Validator::make($rule['content'], ['column' => 'required']);
 
                 $v->sometimes('operand', 'required', function ($rule) {
-                    return ! ($rule['value'] === 'true' || $rule['value'] === 'false');
+                    return !($rule['value'] === 'true' || $rule['value'] === 'false');
                 });
 
                 $v->sometimes('value', 'required', function ($rule) {
-                    return ! collect([
+                    return !collect([
                         'is empty',
                         'is not empty',
                     ])->contains($rule['operand']);
@@ -213,7 +213,7 @@ class ComplexQuery extends Component
             'scope' => ['includes'],
         ];
 
-        if (! $this->getRuleColumn($key)) {
+        if (!$this->getRuleColumn($key)) {
             return [];
         }
 

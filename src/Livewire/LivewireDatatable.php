@@ -91,16 +91,6 @@ class LivewireDatatable extends Component
     public array $groupLabels = [];
 
     protected ?Builder $query = null;
-    protected $listeners = [
-        'refreshLivewireDatatable',
-        'complexQuery',
-        'saveQuery',
-        'deleteQuery',
-        'applyToTable',
-        'resetTable',
-        'doTextFilter',
-        'toggleGroup',
-    ];
 
     protected array $operators = [
         '='                => '=',
@@ -147,12 +137,13 @@ class LivewireDatatable extends Component
     ];
 
     /**
-     * This event allows to control the options of the datatable from foreign livewire components
+     * This event allows controlling the options of the datatable from foreign livewire components
      * by using $dispatch.
      *
      * @example $this->dispatch('applyToTable', perPage: 25); // in any other livewire component on the same page
      * @throws Exception
      */
+    #[On('applyToTable')]
     public function applyToTable($options): void
     {
         if (isset($options['sort'])) {
@@ -198,6 +189,7 @@ class LivewireDatatable extends Component
     /**
      * Call to clear all searches, filters, selections, return to page 1 and set perPage to default.
      */
+    #[On('resetTable')]
     public function resetTable(): void
     {
         $this->perPage = config('livewire-datatables.default_per_page', 10);
@@ -720,6 +712,7 @@ class LivewireDatatable extends Component
             $column['sort'] => $column['sort'],
             $column['base'] => $column['base'],
             is_array($column['select']) => Str::before($column['select'][0], ' AS '),
+            is_object($column['select']) => Str::before($column['select']->getValue(DB::connection()->getQueryGrammar()), ' AS '),
             $column['select'] => $this->getCorrectSortStringForJson($column),
             default => match ($dbtable) {
                 'mysql' => new Expression('`' . $column['name'] . '`'),
@@ -795,6 +788,7 @@ class LivewireDatatable extends Component
         $this->refreshLivewireDatatable();
     }
 
+    #[On('refreshLivewireDatatable')]
     public function refreshLivewireDatatable(): void
     {
         $this->setPage(1);
@@ -849,6 +843,7 @@ class LivewireDatatable extends Component
         $this->setSessionStoredHidden();
     }
 
+    #[On('toggleGroup')]
     public function toggleGroup($group): void
     {
         if ($this->isGroupVisible($group)) {
@@ -924,6 +919,7 @@ class LivewireDatatable extends Component
         $this->setSessionStoredFilters();
     }
 
+    #[On('doTextFilter')]
     public function doTextFilter($index, $value): void
     {
         foreach (explode(' ', $value) as $val) {
@@ -1035,7 +1031,7 @@ class LivewireDatatable extends Component
         $this->setPage(1);
         $this->setSessionStoredFilters();
 
-        $this->dispatch('resetQuery')->to('complex-query');
+        $this->dispatch('reset-query')->to(ComplexQuery::class);
     }
 
     public function removeBooleanFilter($column): void
@@ -1262,7 +1258,8 @@ class LivewireDatatable extends Component
         }
     }
 
-    public function complexQuery($rules): void
+    #[On('complexQuery')]
+    public function setComplexQueryRules($rules): void
     {
         $this->complexQuery = $rules;
     }
@@ -1825,11 +1822,13 @@ class LivewireDatatable extends Component
         return isset($row->checkbox_attribute) && in_array($row->checkbox_attribute, $this->selected, true);
     }
 
-    public function saveQuery($name, $rules)
+    #[On('saveQuery')]
+    public function saveQuery($name, $rules): void
     {
         // Override this method with your own method for saving
     }
 
+    #[On('deleteQuery')]
     public function deleteQuery($id): void
     {
         // Override this method with your own method for deleting
