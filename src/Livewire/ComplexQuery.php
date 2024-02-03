@@ -13,7 +13,7 @@ class ComplexQuery extends Component
 {
     public array|Collection $columns;
     public string $persistKey;
-    public array $savedQueries;
+    public ?array $savedQueries;
     public array $query = [];
     public array $rule = [];
     public array $rules = [
