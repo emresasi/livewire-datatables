@@ -6,11 +6,12 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class ComplexQuery extends Component
 {
-    public array $columns;
+    public array|Collection $columns;
     public string $persistKey;
     public array $savedQueries;
     public array $query = [];
