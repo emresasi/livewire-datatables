@@ -7,6 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ComplexQuery extends Component
@@ -88,6 +89,7 @@ class ComplexQuery extends Component
     public function resetQuery(): void
     {
         $this->reset('rules');
+        $this->dispatch('refreshLivewireDatatable');
         $this->runQuery();
     }
 

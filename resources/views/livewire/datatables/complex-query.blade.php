@@ -2,8 +2,8 @@
         rules: @if($persistKey) $persist('').as('{{ $persistKey }}') @else '' @endif,
         init() {
             Livewire.on('complexQuery', rules => this.rules = rules)
-            if (this.rules && this.rules !== '') {
-                $wire.set('rules', this.rules)
+            if (this.rules && this.rules !== '' && this.rules.rules !== null) {
+                $wire.set('rules', this.rules.rules)
                 $wire.runQuery()
             }
         }
