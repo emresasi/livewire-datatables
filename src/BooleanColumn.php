@@ -7,6 +7,7 @@ use Closure;
 class BooleanColumn extends Column
 {
     public string $type = 'boolean';
+
     public string|Closure|array|null $callback;
 
     public function __construct()

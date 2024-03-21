@@ -7,6 +7,7 @@ use Illuminate\Support\Carbon;
 class TimeColumn extends Column
 {
     public string $type = 'time';
+
     public string|\Closure|array|null $callback;
 
     public function __construct()

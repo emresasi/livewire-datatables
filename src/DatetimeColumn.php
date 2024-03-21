@@ -7,6 +7,7 @@ use Illuminate\Support\Carbon;
 class DatetimeColumn extends Column
 {
     public string $type = 'datetime';
+
     public string|\Closure|array|null $callback;
 
     public function __construct()

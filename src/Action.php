@@ -9,12 +9,19 @@ use Illuminate\Support\Collection;
 class Action
 {
     public string $value;
+
     public string $label;
+
     public string $group;
+
     public string $fileName;
+
     public bool $isExport = false;
+
     public array $styles = [];
+
     public array $widths = [];
+
     public Closure $callable;
 
     public function __call($method, $args)

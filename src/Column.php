@@ -2,45 +2,75 @@
 
 namespace Arm092\LivewireDatatables;
 
+use Arm092\LivewireDatatables\Livewire\LivewireDatatable;
 use Closure;
 use Illuminate\Contracts\Database\Query\Expression;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Arm092\LivewireDatatables\Livewire\LivewireDatatable;
 
 class Column implements \ArrayAccess
 {
     public string $type = 'string';
+
     public int $index = 0;
+
     public string $label = '';
+
     public array $tooltip;
+
     public string $name;
+
     public string|array|Expression|null $select = null;
+
     public array $joins;
+
     public ?string $base = null;
+
     public string $raw = '';
+
     public bool $searchable = false;
+
     public bool $sortable = false;
+
     public string|array|null $filterOn = null;
+
     public bool|array $filterable = false;
+
     public string|bool|null $hideable = null;
+
     public ?string $sort = null;
+
     public bool|string $defaultSort = false;
+
     public string|array|Closure|null $callback = null;
+
     public bool $hidden = false;
+
     public ?string $scope = null;
+
     public ?string $scopeFilter = null;
+
     public array $params = [];
+
     public array $additionalSelects = [];
+
     public string $filterView;
+
     public string $headerAlign = 'left';
+
     public string $contentAlign = 'left';
+
     public bool $preventExport = false;
+
     public string $width;
+
     public string $minWidth;
+
     public string $maxWidth;
+
     public ?Closure $exportCallback = null;
+
     public string $aggregate;
 
     /**
@@ -72,7 +102,7 @@ class Column implements \ArrayAccess
         $column = new static;
         $column->name = $name;
         $column->aggregate = Str::contains($name, ':') ? Str::after($name, ':') : $column->aggregate();
-        $column->label = (string)Str::of($name)->after('.')->ucfirst()->replace('_', ' ');
+        $column->label = (string) Str::of($name)->after('.')->ucfirst()->replace('_', ' ');
 
         if (Str::contains(Str::lower($name), ' as ')) {
             $column->name = array_reverse(preg_split('/ as /i', $name))[0];
@@ -101,8 +131,8 @@ class Column implements \ArrayAccess
         $column->raw = $raw;
         $column->name = Str::after($raw, ' AS ');
         $column->select = DB::raw(Str::before($raw, ' AS '));
-        $column->label = (string)Str::of($raw)->afterLast(' AS ')->replace('`', '');
-        $column->sort = (string)Str::of($raw)->beforeLast(' AS ');
+        $column->label = (string) Str::of($raw)->afterLast(' AS ')->replace('`', '');
+        $column->sort = (string) Str::of($raw)->beforeLast(' AS ');
 
         return $column;
     }
@@ -110,24 +140,23 @@ class Column implements \ArrayAccess
     /**
      * Make a callback function.
      *
-     * @param array|string $columns The (comma separated) columns that should be retrieved from the database.
-     *                                      Is being translated directly into the `.sql`.
-     * @param Closure|string $callback A callback that defines how the retrieved columns are processed.
-     * @param array $params Optional additional parameters that are passed to the given Closure.
-     * @param string|null $callbackName string          Optional string that defines the 'name' of the column.
-     *                                      Leave empty to let livewire autogenerate a distinct value.
+     * @param  array|string  $columns  The (comma separated) columns that should be retrieved from the database.
+     *                                 Is being translated directly into the `.sql`.
+     * @param  Closure|string  $callback  A callback that defines how the retrieved columns are processed.
+     * @param  array  $params  Optional additional parameters that are passed to the given Closure.
+     * @param  string|null  $callbackName  string          Optional string that defines the 'name' of the column.
+     *                                     Leave empty to let livewire autogenerate a distinct value.
      * @return Column
      */
     public static function callback(
-        array|string   $columns,
+        array|string $columns,
         Closure|string $callback,
-        array          $params = [],
-        ?string        $callbackName = null
-    ): static
-    {
+        array $params = [],
+        ?string $callbackName = null
+    ): static {
         $column = new static;
 
-        $column->name = 'callback_' . ($callbackName ?? (string)crc32(json_encode(func_get_args())));
+        $column->name = 'callback_'.($callbackName ?? (string) crc32(json_encode(func_get_args())));
         $column->callback = $callback;
         $column->additionalSelects = is_array($columns) ? $columns : array_map('trim', explode(',', $columns));
         $column->params = $params;
@@ -137,9 +166,9 @@ class Column implements \ArrayAccess
 
     public static function checkbox($attribute = 'id'): static
     {
-        return static::name($attribute . ' as checkbox_attribute')
-                     ->setType('checkbox')
-                     ->excludeFromExport();
+        return static::name($attribute.' as checkbox_attribute')
+            ->setType('checkbox')
+            ->excludeFromExport();
     }
 
     public static function scope($scope, $alias): static
@@ -205,7 +234,7 @@ class Column implements \ArrayAccess
     public function tooltip($text, $label = null): static
     {
         $this->tooltip = [
-            'text'  => $text,
+            'text' => $text,
             'label' => $label,
         ];
 
@@ -317,7 +346,7 @@ class Column implements \ArrayAccess
                 $substitutes["{{{$attribute}}}"] = $value;
             }
 
-            if (!$slot) {
+            if (! $slot) {
                 $slot = $caption;
             }
 
@@ -450,7 +479,7 @@ class Column implements \ArrayAccess
 
     public function toggleHidden(): void
     {
-        $this->hidden = !$this->hidden;
+        $this->hidden = ! $this->hidden;
     }
 
     public function toArray(): array
@@ -467,7 +496,7 @@ class Column implements \ArrayAccess
 
     public function isBaseColumn(): bool
     {
-        return !Str::startsWith($this->name, 'callback_') && !Str::contains($this->name, '.') && !$this->raw;
+        return ! Str::startsWith($this->name, 'callback_') && ! Str::contains($this->name, '.') && ! $this->raw;
     }
 
     public function field(): string
@@ -558,7 +587,7 @@ class Column implements \ArrayAccess
 
     public function offsetExists(mixed $offset): bool
     {
-        return property_exists($this, $offset) && !is_null($this->{$offset});
+        return property_exists($this, $offset) && ! is_null($this->{$offset});
     }
 
     public function offsetGet(mixed $offset): mixed

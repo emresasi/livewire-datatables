@@ -4,19 +4,24 @@ namespace Arm092\LivewireDatatables\Livewire;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Support\Collection;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 class ComplexQuery extends Component
 {
     public array|Collection $columns;
+
     public string $persistKey;
+
     public ?array $savedQueries;
+
     public array $query = [];
+
     public array $rule = [];
+
     public array $rules = [
         [
             'type' => 'group',
@@ -58,7 +63,7 @@ class ComplexQuery extends Component
         return collect($rules ?? $this->rules)->map(function ($rule) {
             return $rule['type'] === 'rule'
                 ? implode(' ', [$this->columns[$rule['content']['column']]['label'] ?? '', $rule['content']['operand'] ?? '', $rule['content']['value'] ?? ''])
-                : '(' . $this->getRulesStringProperty($rule['content'], $rule['logic']) . ')';
+                : '('.$this->getRulesStringProperty($rule['content'], $rule['logic']).')';
         })->join(strtoupper(" $logic "));
     }
 
@@ -102,11 +107,11 @@ class ComplexQuery extends Component
                 $v = Validator::make($rule['content'], ['column' => 'required']);
 
                 $v->sometimes('operand', 'required', function ($rule) {
-                    return !($rule['value'] === 'true' || $rule['value'] === 'false');
+                    return ! ($rule['value'] === 'true' || $rule['value'] === 'false');
                 });
 
                 $v->sometimes('value', 'required', function ($rule) {
-                    return !collect([
+                    return ! collect([
                         'is empty',
                         'is not empty',
                     ])->contains($rule['operand']);
@@ -200,7 +205,7 @@ class ComplexQuery extends Component
 
     public function getRuleColumn($key)
     {
-        return $this->columns[Arr::get($this->rules, $key . '.column')] ?? null;
+        return $this->columns[Arr::get($this->rules, $key.'.column')] ?? null;
     }
 
     public function getOperands($key)
@@ -216,7 +221,7 @@ class ComplexQuery extends Component
             'scope' => ['includes'],
         ];
 
-        if (!$this->getRuleColumn($key)) {
+        if (! $this->getRuleColumn($key)) {
             return [];
         }
 

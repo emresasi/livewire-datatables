@@ -2,17 +2,18 @@
 
 namespace Arm092\LivewireDatatables\Tests\Classes;
 
-use Illuminate\Database\Eloquent\Model;
 use Arm092\LivewireDatatables\BooleanColumn;
 use Arm092\LivewireDatatables\Column;
 use Arm092\LivewireDatatables\DateColumn;
 use Arm092\LivewireDatatables\Livewire\LivewireDatatable;
 use Arm092\LivewireDatatables\NumberColumn;
 use Arm092\LivewireDatatables\Tests\Models\DummyModel;
+use Illuminate\Database\Eloquent\Model;
 
 class DummyTable extends LivewireDatatable
 {
     public int $perPage = 10;
+
     public string|null|Model $model = DummyModel::class;
 
     public function getColumns(): array|Model
@@ -44,9 +45,9 @@ class DummyTable extends LivewireDatatable
                 ->label('Relation'),
 
             Column::name('subject AS string')
-                    ->label('BooleanFilterableSubject')
-                    ->booleanFilterable()
-                    ->hide(),
+                ->label('BooleanFilterableSubject')
+                ->booleanFilterable()
+                ->hide(),
         ];
     }
 }

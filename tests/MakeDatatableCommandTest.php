@@ -2,10 +2,10 @@
 
 namespace Arm092\LivewireDatatables\Tests;
 
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\File;
 use Arm092\LivewireDatatables\Commands\MakeDatatableCommand;
 use Arm092\LivewireDatatables\Tests\LivewireTestCase as TestCase;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
 
 class MakeDatatableCommandTest extends TestCase
 {
@@ -86,11 +86,11 @@ class MakeDatatableCommandTest extends TestCase
 
     protected function livewireClassesPath($path = '')
     {
-        return app_path('Livewire/Datatables' . ($path ? '/' . $path : ''));
+        return app_path('Livewire/Datatables'.($path ? '/'.$path : ''));
     }
 
     protected function livewireViewsPath($path = '')
     {
-        return resource_path('views') . '/livewire' . ($path ? '/' . $path : '');
+        return resource_path('views').'/livewire'.($path ? '/'.$path : '');
     }
 }

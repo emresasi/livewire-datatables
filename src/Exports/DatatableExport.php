@@ -11,13 +11,16 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class DatatableExport implements FromCollection, WithHeadings, ShouldAutoSize, WithColumnWidths, WithStyles
+class DatatableExport implements FromCollection, ShouldAutoSize, WithColumnWidths, WithHeadings, WithStyles
 {
     use Exportable;
 
     public $collection;
+
     public $fileName = 'DatatableExport.xlsx';
+
     public $styles = [];
+
     public $columnWidths = [];
 
     public function __construct($collection)

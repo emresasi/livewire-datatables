@@ -2,9 +2,9 @@
 
 namespace Arm092\LivewireDatatables\Tests;
 
+use Arm092\LivewireDatatables\Tests\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
-use Arm092\LivewireDatatables\Tests\TestCase as BaseTestCase;
 
 class LivewireTestCase extends BaseTestCase
 {
@@ -31,6 +31,6 @@ class LivewireTestCase extends BaseTestCase
 
     protected function livewireClassesPath($path = '')
     {
-        return app_path('Http/Livewire' . ($path ? '/' . $path : ''));
+        return app_path('Http/Livewire'.($path ? '/'.$path : ''));
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Arm092\LivewireDatatables\Tests;
 
-use Illuminate\Support\Facades\DB;
 use Arm092\LivewireDatatables\Column;
 use Arm092\LivewireDatatables\DateColumn;
+use Illuminate\Support\Facades\DB;
 
 class ColumnTest extends TestCase
 {
@@ -38,6 +38,7 @@ class ColumnTest extends TestCase
 
     /**
      * @test
+     *
      * @dataProvider settersDataProvider
      */
     public function it_sets_properties_and_parameters($method, $value, $attribute)

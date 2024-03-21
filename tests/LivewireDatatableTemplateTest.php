@@ -2,9 +2,9 @@
 
 namespace Arm092\LivewireDatatables\Tests;
 
-use Livewire\Livewire;
 use Arm092\LivewireDatatables\Livewire\LivewireDatatable;
 use Arm092\LivewireDatatables\Tests\Models\DummyModel;
+use Livewire\Livewire;
 
 class LivewireDatatableTemplateTest extends TestCase
 {

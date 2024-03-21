@@ -14,7 +14,7 @@ class MakeDatatableCommand extends FileManipulationCommand
     public function handle(): void
     {
         $this->parser = new ComponentParser(
-            config('livewire.class_namespace', 'App\\Livewire') . '\\Datatables',
+            config('livewire.class_namespace', 'App\\Livewire').'\\Datatables',
             $this->argument('name'),
             $this->option('model')
         );
@@ -28,7 +28,7 @@ class MakeDatatableCommand extends FileManipulationCommand
 
         $class = $this->createClass();
 
-//        $this->refreshComponentAutodiscovery();
+        //        $this->refreshComponentAutodiscovery();
 
         $this->line("<options=bold,reverse;fg=green> COMPONENT CREATED </> 🤙\n");
         $class && $this->line("<options=bold;fg=green>CLASS:</> {$this->parser->relativeClassPath()}");
@@ -52,10 +52,10 @@ class MakeDatatableCommand extends FileManipulationCommand
         return $classPath;
     }
 
-//    public function refreshComponentAutodiscovery()
-//    {
-//        app(LivewireComponentsFinder::class)->build();
-//    }
+    //    public function refreshComponentAutodiscovery()
+    //    {
+    //        app(LivewireComponentsFinder::class)->build();
+    //    }
 
     public function isReservedClassName($name): bool
     {
